@@ -81,4 +81,30 @@ def All_exchanges():
     print(exchange_list)
 
 
-All_exchanges()
+# All_exchanges()
+
+def fetch_exchange(id):
+    fetch = " https://api.coinlore.net/api/exchange/"
+    payload = {'id': id}
+    response = requests.get(fetch, params=payload)
+    data = response.json()
+    # print(type(data))
+    # pprint.pprint(data)
+    # Iterate over all key-value pairs of dict argument
+
+    dictionary = data.get('pairs')
+    print (dictionary)
+    for element in dictionary:
+        volume="{:,}".format(round(int(element.get('volume'))))
+        print ("Currency Code:",element.get('base'),"|", "Currency exchange:", element.get('quote'),"|", "Tranzactions volume:",volume, "Price/UOM:", "{:,}".format(float("{:.2f}".format(float(element.get('price_usd'))))))
+
+# Loop through all key-value pairs of a nested dictionary
+# for pair in fetch_exchange("pairs"):
+#     print(pair)
+
+    # print(key[0:])
+    # print(value)
+    # print(value)
+    # for i in value:
+    # print(i)
+# fetch_exchange(3)
