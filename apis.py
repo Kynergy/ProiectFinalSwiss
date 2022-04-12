@@ -1,22 +1,14 @@
 import requests
-import pprint
 import time
-
-
-
-
-
 
 base_url = "https://api.coinlore.net/api/"
 
 
-
-
 def global_api():
-    """Returns the number of coins and markets
-    :response coins_count - integer, active_markets - integer
-    :type sentence: int
-    :return: coins count, active markets
+    """
+    :goal: Returns the number of coins and markets
+    :return: Total number of coins and active markets
+    :rtype: str
     """
 
     api_global = requests.get(url=f"{base_url}global").json()
@@ -28,11 +20,13 @@ def global_api():
 
     # return (f"The total number of coins is {coins_count}",f"\nThe number of active markets for cryptocurrencies are: {active_markets}")
     return output_text
-#
+
+
 def all_coins():
-    """Return all coins with description
-    :type: dictionary
+    """
+    :goal: Provides all the coins
     :return: list of total coins of the market with their properties
+    :rtype: list(str)
     """
     coin_list = []
 
@@ -46,22 +40,19 @@ def all_coins():
     response = {"data": [1] * 100}
     index = 0
 
-
-
-    while len(response["data"]) == 100 and index<=5:
+    while len(response["data"]) == 100 and index <= 5:
         response = requests.get(api_all1, params={"limit": 100, "start": 100 * index}).json()
 
         time.sleep(1)
         index += 1
-        coin_list.append(response["data"][0])
-        # print(response)
+        coin_list += response["data"]
 
     variabila = []
     for element in coin_list:
-        variabila.append('ID: '+ element['id']+' Symbol: '+ element['symbol']+' Name: '+ element['name']+' Price in USD:'+ element['price_usd'])
-        variabila.append(' Symbol: '+ element['symbol'])
-        variabila.append(' Name: '+ element['name'])
-        variabila.append(' Price in USD:'+ element['price_usd'])
+        variabila.append(f"ID: {element['id']}, Symbol: {element['symbol']}, Name: {element['name']}, Price in USD: +{element['price_usd']}")
+        variabila.append(f"Symbol: {element['symbol']}")
+        variabila.append(f"Name: {element['name']}")
+        variabila.append(f"Price in USD: {element['price_usd']}")
 
 #     # variabila = variabila + coin_list[element]
 #     #         j = 0
@@ -71,16 +62,12 @@ def all_coins():
 #     #              print(f"The Id of the currency is: {i[0],'id'}")
     return variabila
 
-#
-#
-# all_coins()
-
 
 def market_for_coins(id):  # parameter to be set - id
-    """Return markets for coins
-    :response Coin, price and quote
-    :param id: integer
-    :return: list of coins
+    """
+    :goal: Provides all the coin markets
+    :param id: the coin's id
+    :type id: int
     """
 
     market = f"{base_url}coin/markets/"
@@ -93,12 +80,12 @@ def market_for_coins(id):  # parameter to be set - id
         print(type(dictionary))
 
 
-# market_for_coins(80)
-
 def all_exchanges(type_of_return):
-    """Return exchanges by an url market
-    :param type_of_return:
-    :return:
+    """
+    :goal: Returns different endpoints for exchange markets
+    :param type_of_return: the endpoint
+    :type type_of_return: str
+    :return: dict(str: str)
     """
 
 

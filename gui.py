@@ -1,9 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-import sys
-
-# sys.path.append("..")
-# from main import All_exchanges
 from apis import *
 from utils import *
 
