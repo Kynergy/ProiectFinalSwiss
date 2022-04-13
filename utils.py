@@ -1,19 +1,15 @@
 import csv
 import requests
 import apis
+import time
+import plotly.graph_objects as go
 
 
-def clear_screen():
-    if name == 'nt':
-        _ = system('cls')
-
-        # for mac and linux(here, os.name is 'posix')
-    else:
-        _ = system('clear')
 
 
-def save_to_csv(id):
-    url = apis.base_url + "/?id="
+def save_to_csv(url,name_of_csv,id):
+
+    url = apis.base_url + url +str(id)
     response = requests.request("GET", url, data={})
     myjson = response.json()
     ourdata = []
@@ -22,10 +18,26 @@ def save_to_csv(id):
     for x in myjson['pairs']:
         listing = [x['base'], x['price_usd'], x['volume']]
         ourdata.append(listing)
-    print(ourdata)
-
-    with open("name.csv", 'w', encoding='UTF8', newline='', errors="ignore") as f:
+    # print(ourdata)
+    date=time.strftime('%Y-%m-%d')
+    with open(f'{name_of_csv}{date}.csv', 'w', encoding='UTF8', newline='', errors="ignore") as f:
         writer = csv.writer(f)
         writer.writerow(csvheader)
         writer.writerows(ourdata)
-    print("done")
+
+# def show_histogram():
+#     with open(f'{name_of_csv}{date}.csv', 'w', encoding='UTF8', newline='', errors="ignore") as f:
+#         f.readlines()
+#
+#
+#
+# fig = go.Figure(
+#     data=[go.Bar(y=[dfdff], x=["text"])],
+#     layout_plotly= "text"
+#         )
+# fig.show()
+# fig.write_image("plot.png")
+
+
+
+

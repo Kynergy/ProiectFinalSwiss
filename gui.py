@@ -4,6 +4,8 @@ from apis import *
 from utils import *
 
 
+
+
 def start_gui():
     # Creating the app
     root = tk.Tk()
@@ -44,9 +46,10 @@ def start_gui():
                 id_for_exchange = i
         return id_for_exchange
 
-    def to_be_deleted():
-        print("button pressed")
-        return
+    def help():
+        f = open('README.MD','r')
+        output = f.read()
+        return output
 
     # ---------------- Defining the dropdown list ---------------- #
 
@@ -70,8 +73,10 @@ def start_gui():
         text_box.tag_add("center",1.0,"end")
         # HOW TO INSERT DATA IN THE DATA BOX
         text_box.insert(1.0,output)
-    text_box(first_tab,"")
-    text_box(second_tab,"")
+
+    # -- Inserting the TEXT Boxes into the tabs --
+    text_box(first_tab, "")
+    text_box(second_tab, "")
 
 
     def button_function(location, button_text, command, row, column):
@@ -87,7 +92,7 @@ def start_gui():
 
 
     # ----------------  Creating second_tab labels ---------------- #
-    label_function(second_tab, "Fetch Exchange", 0, 0, 2)
+    label_function(second_tab, "-- Fetch Exchange --", 0, 1, 2)
     label_function(second_tab, "Please select an exchange", 1, 0, 1)
 
     # ----------------  Creating the second_tab dropdown box  ---------------- #
@@ -102,7 +107,7 @@ def start_gui():
     # ----------------  Creating the second_tab buttons  ---------------- #
 
     # --- Fetch Exchange button ---#
-    button_function(second_tab, "Fetch Exchange", lambda: fetch_exchange(id_for_exchange), 3, 0)
+    button_function(second_tab, "Fetch Exchange", lambda: text_box(second_tab,fetch_exchange(id_for_exchange)), 3, 0)
 
 
     # --- Back button ---#
@@ -113,7 +118,7 @@ def start_gui():
 
     # Creating the main window title:
     # Creating the main window label
-    label_function(first_tab, "--Cryptocurrencies--", 0, 1, 3)
+    label_function(first_tab, "--Cryptocurrencies--", 0, 1, 2)
 
     # ---------------- Defining the buttons in the main window ---------------- #
 
@@ -124,7 +129,7 @@ def start_gui():
     button_function(first_tab, "Coin Info", lambda: (text_box(first_tab,all_coins())), 2, 0)
 
     # --- Coin Market button creation ---#
-    button_function(second_tab, "Coin Markets", lambda: market_for_coins(id_for_exchange), 4, 0)
+    button_function(second_tab, "Coin Markets", lambda: (text_box(second_tab,market_for_coins(id_for_exchange))), 4, 0)
     '''
     La butonul asta ar trebui sa fac la fel cum fac la exchange rates.
     Butonul sa duca pe second tab, iar acolo sa ne folosesc de dropdown sa luam id-ul si sa il aplic la un 
@@ -132,24 +137,14 @@ def start_gui():
     '''
 
     # --- Fetch Exchange Rates button creation ---#
-    button_function(first_tab, "Market details", go_to_second_tab, 4, 0)
+    button_function(first_tab, "Go To Market details", go_to_second_tab, 5, 1)
     # --- Help Button ---#
-    button_function(first_tab, "Help", to_be_deleted, 5, 0)
+    button_function(first_tab, "Help", lambda: text_box(first_tab,help()), 5, 0)
     # --- Save to CSV button ---#
-    button_function(first_tab, "Save Data", to_be_deleted, 5, 1)
-    button_function(second_tab, "Save Data", to_be_deleted, 5, 1)
+    # button_function(first_tab, "Save Coin Info", lambda: save_output_to_csv(1,'coin_info'), 4, 0)
+    button_function(second_tab, "Save Exchange",lambda: (save_to_csv('exchange/?id=','fetch_exchange',id_for_exchange),text_box(second_tab,"CSV saved")), 5, 1)
     # --- Quit Button ---#
     button_function(first_tab, "Quit", root.quit, 5, 2)
-
-    # # ---------------- Defining the main window Text Box ----------------#
-    #
-    # text_box = tk.Text(first_tab, height=20, width=60, yscrollcommand=1, xscrollcommand=1, bd=3)
-    # text_box.grid(row=1, column=1, rowspan=4, padx=10, pady=10)
-    #
-    # # HOW TO INSERT DATA IN THE DATA BOX
-    # text_box.insert(tk.END, "test")
-    # ---------------- Defining the main window Text Box ----------------#
-
 
     root.mainloop()
 
