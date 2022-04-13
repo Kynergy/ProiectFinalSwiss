@@ -37,10 +37,10 @@ Overview:
 - 1.0.0
 
 ## Architecture
-![Diagram](./Arch diagram.png)
+![Diagram](./Arch_diagram.png)
 
 ##Process Flow
-![Diagram](./Process Flow.png)
+![Diagram](./Process_Flow.png)
 
 
 
